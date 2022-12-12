@@ -20,7 +20,9 @@ class PlayerAdapter(private val model: PlayerViewModel): RecyclerView.Adapter<Pl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.playerName.text = model.players.value?.get(position)?.name
+        holder.playerTeam.text = model.players.value?.get(position)?.team
+        holder.playerImage.setImageUrl(model.getImageUrl(position), model.imageLoader)
     }
 
     override fun getItemCount(): Int = model.players.value?.size ?: 0

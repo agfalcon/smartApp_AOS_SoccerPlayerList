@@ -1,16 +1,20 @@
 package kr.ac.kumoh.s20180094.soccerplayerlist
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.util.LruCache
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.volley.Request
 import com.android.volley.RequestQueue
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
+import java.net.URLEncoder
 
 class PlayerViewModel(application: Application) : AndroidViewModel(application) {
     data class Player(var id: Int, var name: String, var nation: String, var team: String, var image: String)
@@ -26,11 +30,26 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         get() = _players
 
     private val queue: RequestQueue
+    val imageLoader: ImageLoader
 
     init{
         _players.value = list
         queue = Volley.newRequestQueue(getApplication())
+        imageLoader = ImageLoader(
+            queue, object: ImageLoader.ImageCache{
+                val cache = LruCache<String, Bitmap>(100)
+                override fun getBitmap(url: String): Bitmap? {
+                    return cache.get(url)
+                }
+
+                override fun putBitmap(url: String, bitmap: Bitmap) {
+                    cache.put(url, bitmap)
+                }
+
+            }
+        )
     }
+
 
     fun requestPlayer(){
         val request = JsonArrayRequest(
@@ -50,6 +69,9 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         queue.add(request)
     }
 
+    fun getImageUrl(i: Int) : String{
+        return "$SERVER_URL/image/" + URLEncoder.encode(list[i].image, "utf-8")
+    }
     private fun parseJson(items: JSONArray){
         for(i in 0 until items.length()){
             val item = items[i] as JSONObject
