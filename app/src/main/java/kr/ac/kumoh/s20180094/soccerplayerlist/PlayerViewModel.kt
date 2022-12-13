@@ -60,7 +60,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                 list.clear()
                 parseJson(it)
                 _players.value = list
-                Toast.makeText(getApplication(), list.toString(), Toast.LENGTH_LONG).show()
+                //Toast.makeText(getApplication(), list.toString(), Toast.LENGTH_LONG).show()
             },
             {
                 Toast.makeText(getApplication(), it.toString(), Toast.LENGTH_SHORT).show()

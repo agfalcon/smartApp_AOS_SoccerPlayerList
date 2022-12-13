@@ -30,7 +30,9 @@
             android:background="@android:drawable/alert_dark_frame"
             app:layout_constraintTop_toBottomOf="@id/text_player_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:cropToPadding="true"
+            />
         <TextView
             android:id="@+id/text_player_team"
             android:layout_width="match_parent"

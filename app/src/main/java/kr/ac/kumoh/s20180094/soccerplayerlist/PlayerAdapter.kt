@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.NetworkImageView
 
@@ -27,6 +28,7 @@ class PlayerAdapter(private val model: PlayerViewModel, private val context: Con
             intent.putExtra(PlayerActivity.KEY_NATION, model.players.value?.get(adapterPosition)?.nation)
             intent.putExtra(PlayerActivity.KEY_TEAM, model.players.value?.get(adapterPosition)?.team)
             intent.putExtra(PlayerActivity.KEY_IMAGE, model.getImageUrl(adapterPosition))
+            startActivity(context, intent, null)
         }
     }
 

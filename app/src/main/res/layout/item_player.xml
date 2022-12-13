@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:scaleType="centerCrop"
+        android:cropToPadding="true"
         />
 
     <TextView
@@ -27,7 +28,6 @@
         />
 
     <TextView
-        android:background="#000"
         android:id="@+id/text_team"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
