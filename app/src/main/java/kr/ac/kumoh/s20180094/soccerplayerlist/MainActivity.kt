@@ -20,7 +20,11 @@ class MainActivity : AppCompatActivity() {
 
         model = ViewModelProvider(this)[PlayerViewModel::class.java]
 
-        playerAdapter = PlayerAdapter(model)
+        playerAdapter = PlayerAdapter(model, this)
+
+        model.players.observe(this){
+            playerAdapter.notifyDataSetChanged()
+        }
 
         binding.listPlayer.apply{
             layoutManager = LinearLayoutManager(applicationContext)
@@ -28,5 +32,7 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             adapter = playerAdapter
         }
+
+        model.requestPlayer()
     }
 }
